@@ -1,0 +1,90 @@
+#include <stdio.h>  
+
+int main() {
+    int n, m;  // number of processes, number of resources
+    int i, j, k;
+    printf("Enter number of processes: ");
+    scanf("%d", &n);
+    printf("Enter number of resources: ");
+    scanf("%d", &m);
+    // Declaration of matrices and arrays
+    int alloc[n][m];  // Allocation matrix: resources currently allocated to each process
+    int max[n][m];    // Max matrix: maximum resources required by each process
+    int avail[m];     // Available vector: resources currently available
+    int need[n][m];   // Need matrix: remaining resources required by each process
+    int finish[n];    // Marks if process is finished (1) or not (0)
+    int safeSeq[n];   // To store the safe sequence of processes
+    // ---------------- INPUT SECTION ----------------
+    // Input the Allocation matrix
+    printf("\nEnter allocation matrix:\n");
+    for(i = 0; i < n; i++) {
+        for(j = 0; j < m; j++) {
+            scanf("%d", &alloc[i][j]);
+        }
+    }
+    // Input the Max matrix
+    printf("\nEnter max matrix:\n");
+    for(i = 0; i < n; i++) {
+        for(j = 0; j < m; j++) {
+            scanf("%d", &max[i][j]);
+        }
+    }
+    // Input the Available resources
+    printf("\nEnter available resources: ");
+    for(i = 0; i < m; i++) {
+        scanf("%d", &avail[i]);
+    }
+    // ---------------- CALCULATE NEED MATRIX ----------------
+    // Need = Max - Allocation
+    for(i = 0; i < n; i++) {
+        for(j = 0; j < m; j++) {
+            need[i][j] = max[i][j] - alloc[i][j];
+        }
+    }
+    // Initialize all processes as unfinished
+    for(i = 0; i < n; i++)
+        finish[i] = 0;
+    int count = 0;  // Number of processes added in safe sequence
+    // ---------------- BANKER'S ALGORITHM START ----------------
+    while (count < n) {
+        int found = 0;  // To check if any process is safely executed in this round
+
+        // Loop through each process
+        for (i = 0; i < n; i++) {
+            // Only consider unfinished processes
+            if (finish[i] == 0) {  
+                int canRun = 1;
+                // Check if current process can be satisfied with available resources
+                for (j = 0; j < m; j++) {
+                    if (need[i][j] > avail[j]) {  // Need more than available
+                        canRun = 0;  // Cannot run now
+                        break;
+                    }
+                }
+                // If all needed resources are available
+                if (canRun) {
+                    // Simulate the process execution — release its resources
+                    for (k = 0; k < m; k++)
+                        avail[k] += alloc[i][k];  // Add allocated resources back to available
+                   
+                    safeSeq[count++] = i;  // Add process to safe sequence
+                    finish[i] = 1;         // Mark process as finished
+                    found = 1;             // Found at least one executable process
+                }
+            }
+        }
+        // If no unfinished process could be executed, system is unsafe
+        if (!found) {
+            printf("\nSystem is not in safe state!\n");
+            return 0;
+        }
+    }
+    // ---------------- PRINT SAFE SEQUENCE ----------------
+    printf("\nSystem is in safe state.\nSafe Sequence is: ");
+    for(i = 0; i < n; i++) {
+        printf("P%d ", safeSeq[i]);
+    }
+    printf("\n");
+
+    return 0;  // End of program
+}
