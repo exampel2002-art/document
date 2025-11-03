@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+// Function to sort the requests
+void sort(int arr[], int n) {
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (arr[j] > arr[j + 1]) {
+                int temp = arr[j];
+                arr[j] = arr[j + 1];
+                arr[j + 1] = temp;
+            }
+        }
+    }
+}
+
+int main() {
+    int n, head, seek = 0;
+    
+    printf("Enter number of requests: ");
+    scanf("%d", &n);
+    
+    int req[n];
+    printf("Enter request sequence: ");
+    for (int i = 0; i < n; i++)
+        scanf("%d", &req[i]);
+    
+    printf("Enter initial head position: ");
+    scanf("%d", &head);
+
+    // Step 1: Sort the requests
+    sort(req, n);
+
+    printf("\n--LOOK Sequence--:\n %d ", head);
+
+    // Step 2: Find the first request greater than or equal to head
+    int i;
+    for (i = 0; i < n; i++) {
+        if (req[i] >= head)
+            break;
+    }
+
+    // Step 3: Move right first (towards higher track numbers)
+    for (int j = i; j < n; j++) {
+        seek += abs(req[j] - head);
+        head = req[j];
+        printf("-> %d ", head);
+    }
+
+    // Step 4: Then move left (towards lower track numbers)
+    for (int j = i - 1; j >= 0; j--) {
+        seek += abs(req[j] - head);
+        head = req[j];
+        printf("-> %d ", head);
+    }
+
+    printf("\nTotal Seek Time: %d\n", seek);
+    return 0;
+}
