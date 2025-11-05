@@ -1,0 +1,58 @@
+class Printer {
+    boolean dollarTurn = true;
+    synchronized void printDollar() {
+        while(!dollarTurn) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+            System.out.print("$");
+            dollarTurn = false;
+            notify();
+    }
+    synchronized void printHash() {
+        while(dollarTurn) {
+            try{
+                wait();
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+        System.out.print("#");
+        dollarTurn = true;
+        notify();
+    }
+}
+class Dollar extends Thread {
+    Printer printer;
+    Dollar(Printer p) {this.printer = p;}
+    public void run() {
+        for(int i = 0; i< 5; i++) {
+            printer.printDollar();
+        }
+    }
+}
+class Hash extends Thread {
+    Printer printer;
+
+    Hash(Printer p) {
+        this.printer = p;
+    }
+
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            printer.printHash();
+        }
+    }
+}
+    public class Main {
+        public static void main(String[] args) {
+            Printer printer = new Printer();
+            Dollar d = new Dollar(printer);
+            Hash h = new Hash(printer);
+            d.start();
+            h.start();
+    }
+}
