@@ -1,0 +1,53 @@
+class ComplexNumber {
+    int real_part;
+    int imag_part;
+
+    // Default constructor
+    ComplexNumber() {
+        real_part = 0;
+        imag_part = 0;
+    }
+
+    // Single parameter constructor
+    ComplexNumber(int value) {
+        real_part = value;
+        imag_part = value;
+    }
+
+    // Two parameter constructor
+    ComplexNumber(int real_part, int imag_part) {
+        this.real_part = real_part;
+        this.imag_part = imag_part;
+    }
+
+    // Method to add two complex numbers
+    ComplexNumber add(ComplexNumber c2) {
+        ComplexNumber result = new ComplexNumber();
+        result.real_part = this.real_part + c2.real_part;
+        result.imag_part = this.imag_part + c2.imag_part;
+        return result;
+    }
+
+    // Method to display complex number
+    void display() {
+        System.out.println(real_part + " + " + imag_part + "i");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create two complex numbers using constructor
+        ComplexNumber c1 = new ComplexNumber(3, 5);
+        ComplexNumber c2 = new ComplexNumber(2, 8);
+
+        // C3 = C1 + C2
+        System.out.println("C3 = C1 + C2");
+        ComplexNumber c3 = c1.add(c2);
+        c3.display();
+
+        // C1 = C1 + C2
+        System.out.println("C1 = C1 + C2");
+        c1 = c1.add(c2);
+        c1.display();
+    }
+}
