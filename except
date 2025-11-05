@@ -1,0 +1,30 @@
+import java.util.Scanner;
+class InvalidcountryException extends Exception {
+    InvalidcountryException(String message) {
+        System.out.println(message);
+    }
+}
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter the country name: ");
+        String country =  scanner.nextLine();
+        try{
+            if(!country.equalsIgnoreCase("INDIA")) {
+                throw new InvalidcountryException("Invalid country code.Only 'INDIA' is accepted.");
+
+            }else{
+                System.out.println("Country accepted" + country.toUpperCase());
+                System.out.println("Proceeding with database entry");
+            }
+        }catch(InvalidcountryException e){
+
+        }
+        scanner.close();
+    }
+}
+
+
+
+
