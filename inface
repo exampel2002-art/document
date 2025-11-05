@@ -1,0 +1,77 @@
+import java.util.Scanner;
+
+// Interface
+interface MarksheetInterface {
+    String collegeName = "ABC College"; // constant value
+    void calculateMarksheet(); // abstract method
+}
+
+// Base class
+class Student {
+    int rollNo;
+    String name;
+
+    void inputStudentDetails() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter Roll No: ");
+        rollNo = sc.nextInt();
+        sc.nextLine(); // consume newline
+        System.out.print("Enter Name: ");
+        name = sc.nextLine();
+    }
+
+    void displayStudentDetails() {
+        System.out.println("\n Student Details ");
+        System.out.println("Roll No: " + rollNo);
+        System.out.println("Name: " + name);
+    }
+}
+
+// Derived class
+class Test extends Student {
+    int subject1, subject2;
+
+    void inputMarks() {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter marks for Subject 1: ");
+        subject1 = sc.nextInt();
+        System.out.print("Enter marks for Subject 2: ");
+        subject2 = sc.nextInt();
+    }
+
+    void displayMarks() {
+        System.out.println("Subject 1 Marks: " + subject1);
+        System.out.println("Subject 2 Marks: " + subject2);
+    }
+}
+
+// Final class that extends and implements
+class Marksheet extends Test implements MarksheetInterface {
+    double total, average;
+
+    @Override
+    public void calculateMarksheet() {
+        total = subject1 + subject2;
+        average = total / 2.0;
+    }
+
+    void displayMarksheet() {
+        System.out.println("\n Marksheet ");
+        System.out.println("College: " + collegeName);
+        displayStudentDetails();
+        displayMarks();
+        System.out.println("Total Marks: " + total);
+        System.out.println("Average Marks: " + average);
+    }
+}
+
+// Main class
+public class Experiment7 {
+    public static void main(String[] args) {
+        Marksheet m = new Marksheet();
+        m.inputStudentDetails();
+        m.inputMarks();
+        m.calculateMarksheet();
+        m.displayMarksheet();
+    }
+}
