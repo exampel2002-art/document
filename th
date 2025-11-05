@@ -1,0 +1,33 @@
+class dollar extends Thread{
+    public void run(){
+        for( int i = 0; i < 5; i++) {
+            System.out.print("$");
+            try{
+                Thread.sleep(100);
+            }catch(InterruptedException e){
+                e.printStackTrace();
+            }
+        }
+    }
+}
+class hash extends Thread{
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            System.out.print("#");
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        dollar d = new dollar();
+        d.start();
+        hash h = new hash();
+        h.start();
+
+    }
+}
