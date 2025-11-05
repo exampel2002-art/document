@@ -1,0 +1,70 @@
+import java.util.Scanner;
+import java.util.Vector;
+
+public class Main{
+    public static void main(String[] args) {
+        Vector<String> shoppingList = new Vector<>();
+        Scanner scanner = new Scanner(System.in);
+        int choice;
+        System.out.println("Welcome to Shopping List");
+        System.out.println("1.Add an item");
+        System.out.println("2.Remove an item");
+        System.out.println("3.Search an item");
+        System.out.println("4.Display the items");
+        System.out.println("5.Exit");
+        do {
+            System.out.println("Please enter your choice");
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter an item to add:");
+                    String addItem = scanner.nextLine();
+                    shoppingList.add(addItem);
+                    System.out.println(addItem + " added successfully!");
+                    break;
+                case 2:
+                    System.out.println("Enter an item to remove:");
+                    String removeItem = scanner.nextLine();
+                    if (shoppingList.remove(removeItem)) {
+                        System.out.println(removeItem + " removed successfully!");
+                    } else {
+                        System.out.println(removeItem + " not found!");
+                    }
+                    break;
+                case 3:
+                    System.out.println("Enter an item to search: ");
+                    String searchItem = scanner.nextLine();
+                    boolean found = false;
+                    for(String item : shoppingList) {
+                        if(item.equalsIgnoreCase(searchItem)) {
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) {
+                        System.out.println(searchItem + " found successfully!");
+                    } else {
+                        System.out.println(searchItem + " not found!");
+                    }
+                    break;
+                case 4:
+                    System.out.println("Items in the shopping List:");
+                    if (shoppingList.isEmpty()) {
+                        System.out.println("List is empty!");
+                    } else {
+                        for (String item : shoppingList) {
+                            System.out.println(" " + item);
+                        }
+                    }
+                    break;
+                case 5:
+                    System.out.println("Exiting program...");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        } while (choice != 5);
+        scanner.close();
+    }
+}
