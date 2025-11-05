@@ -1,0 +1,98 @@
+import java.util.Scanner;
+class Staff {
+    int code;
+    String name;
+    String address;
+    Staff(int code, String name, String address) {
+        this.code = code;
+        this.name = name;
+        this.address = address;
+    }
+    void displayStaff() {
+        System.out.println("Code: " + code);
+        System.out.println("Name: " + name);
+        System.out.println("Address: " + address);
+    }
+}
+class Teacher extends Staff {
+    String subject;
+    String publication;
+    Teacher(int code, String name, String address,String subject,String publication) {
+        super(code, name, address);
+        this.subject = subject;
+        this.publication = publication;
+    }
+    void displayTeacher() {
+        super.displayStaff();
+        System.out.println("Subject: " + subject);
+        System.out.println("Publication: " + publication);
+    }
+}
+class Typist extends Staff {
+    int speed;
+    Typist(int code, String name, String address,int speed) {
+        super(code, name, address);
+        this.speed = speed;
+    }
+        void displayTypist() {
+            super.displayStaff();
+            System.out.println("Spped: " + speed);
+        }
+}
+class Officer extends Staff {
+    String grade;
+    Officer(int code, String name, String address,String grade) {
+        super(code, name, address);
+        this.grade = grade;
+    }
+        void displayOfficer() {
+            super.displayStaff();
+            System.out.println("Grade: " + grade);
+        }
+}
+
+public class Main{
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter Staff Code:");
+        int code = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter Staff Name:");
+        String name = scanner.nextLine();
+        System.out.print("Enter Staff Address:");
+        String address = scanner.nextLine();
+        System.out.print("Enter the subject:");
+        String subject = scanner.nextLine();
+        System.out.print("Enter your publication:");
+        String publication = scanner.nextLine();
+        Teacher t = new Teacher(code, name, address,subject,publication);
+        System.out.print("Enter Staff Code:");
+        int tycode = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter Staff Name:");
+        String tyname = scanner.nextLine();
+        System.out.print("Enter Staff Address:");
+        String tyaddress = scanner.nextLine();
+        System.out.print("Enter your speed:");
+        int speed = scanner.nextInt();
+        Typist ty = new Typist(tycode, tyname, tyaddress,speed);
+        System.out.print("Enter Staff Code:");
+        int ocode = scanner.nextInt();
+        scanner.nextLine();
+        System.out.print("Enter Staff Name:");
+        String oname = scanner.nextLine();
+        System.out.print("Enter Staff Address:");
+        String oaddress = scanner.nextLine();
+        System.out.print("Enter your grade:");
+        String grade = scanner.next();
+        Officer off = new Officer(ocode, oname, oaddress,grade);
+        System.out.println("Teacher details:");
+        t.displayTeacher();
+        System.out.println("Typist details:");
+        ty.displayTypist();
+        System.out.println("Officer details:");
+        off.displayOfficer();
+
+    scanner.close();
+    }
+}
