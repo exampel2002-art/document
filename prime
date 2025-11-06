@@ -1,0 +1,86 @@
+import java.util.Scanner;
+
+class Main {
+    public static void main(String[] args) {
+        Scanner item = new Scanner(System.in);
+
+        System.out.println("Enter two numbers:");
+        int n1 = item.nextInt();
+        int n2 = item.nextInt();
+        
+        if (n1 < 2 || n2 < 2 || n1 > 100 || n2 > 100 || (n2 - n1) < 35) {
+            System.out.println("Input does not satisfy constraints.");
+            item.close();
+            return;
+        }
+
+        int[] primes = new int[n2 - n1];
+        int count = 0;
+
+        System.out.println("Prime numbers between " + n1 + " and " + n2 + ":");
+        for (int i = n1 + 1; i < n2; i++) {
+            boolean isPrim e = true;
+            if (i < 2) {
+                isPrime = false;
+            } else {
+                int sqrt = (int) Math.sqrt(i);
+                for (int j = 2; j <= sqrt; j++) {
+                    if (i % j == 0) {
+                        isPrime = false;
+                        break;
+                    }
+                }
+            }
+            if (isPrime) {
+                primes[count++] = i;
+                System.out.print(i + " ");
+            }
+        }
+        System.out.println();
+
+        if (count == 0) {
+            System.out.println("No prime numbers found.");
+            item.close();
+            return;
+        }
+
+        int min = primes[0];
+        int max = primes[0];
+        for (int i = 1; i < count; i++) {
+            if (primes[i] < min) min = primes[i];
+            if (primes[i] > max) max = primes[i];
+        }
+
+        System.out.println("Count of prime numbers: " + count);
+        System.out.println("Smallest prime (a): " + min);
+        System.out.println("Largest prime (b): " + max);
+
+       
+        int a = min;
+        int b = max;
+        int fib = 0;
+
+        System.out.print("Fibonacci series starting with " + a + " and " + b + ": ");
+
+        if (count == 1) {
+            fib = a;
+            System.out.print(fib);
+        } else if (count == 2) {
+            fib = b;
+            System.out.print(a + " " + b);
+        } else {
+            System.out.print(a + " " + b + " ");
+            for (int i = 3; i <= count; i++) {
+                fib = a + b;
+                System.out.print(fib + " ");
+                a = b;
+                b = fib;
+            }
+        }
+
+        System.out.println();
+        System.out.println("Last Fibonacci number: " + fib);
+
+        item.close();
+    }
+}
